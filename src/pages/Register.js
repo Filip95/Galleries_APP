@@ -10,7 +10,7 @@ import { register } from "../store/auth";
     email: "",
     password: "",
     password_confirmation: "",
-    checkbox: ""
+    checkbox: 0
   });
 
   function handleSubmit(event) {
@@ -76,8 +76,9 @@ import { register } from "../store/auth";
           />
         </div>
         <div>
-            <input type="checkbox" id="terms" name="terms" value={userData.checkbox} 
-            onChange={({ target}) => setUserData({...userData,checkbox: target.value})}/>
+            I agree with terms and conditions
+            <input required type="checkbox" id="checkbox" name="checkbox" checked={userData.checkbox} 
+            onChange={({ target}) => setUserData({...userData,checkbox: target.checked})}/>
         </div>
 
         <button>Register</button>
