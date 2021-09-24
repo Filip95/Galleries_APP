@@ -3,10 +3,10 @@ import HttpService from "./HttpService";
 class GalleryService extends HttpService {
   getAll = async (name = "") => {
     try {
-     let route = "/galleries";
-     if (name) {
+      let route = "/galleries";
+      if (name) {
         route += `?name=${name}`;
-     }
+      }
       const { data } = await this.client.get(route);
       return data;
     } catch (error) {
@@ -33,43 +33,39 @@ class GalleryService extends HttpService {
     } catch (error) {
       console.error(error);
     }
-    return null;
   };
 
   createGallery = async (newGallery) => {
     try {
-      const { data } = await this.client.post("galleries", newGallery);
+      const { data } = await this.client.post("/create-gallery", newGallery);
       return data;
     } catch (error) {
       console.log(error);
     }
-    return null;
   };
 
   removeGallery = async (id) => {
     try {
-      const { data } = await this.client.delete(`galleries/${id}`);
+      const { data } = await this.client.delete(`/galleries/${id}`);
       return data;
     } catch (error) {
       console.log(error);
     }
-    return null;
   };
 
   editGallery = async (id, gallery) => {
     try {
-      const { data } = await this.client.put(`galleries/${id}`, gallery);
+      const { data } = await this.client.put(`/galleries/${id}`, gallery);
       return data;
     } catch (error) {
       console.log(error);
     }
-    return null;
   };
 
   addComment = async (comment, galleryId) => {
     try {
       const { data } = await this.client.post(
-        `galleries/${galleryId}/comments`,
+        `/galleries/${galleryId}/comments`,
         comment
       );
       return data;
@@ -82,7 +78,7 @@ class GalleryService extends HttpService {
   deleteComment = async (commentId, galleryId) => {
     try {
       const { data } = await this.client.delete(
-        `galleries/${galleryId}/comments/${commentId}`
+        `/galleries/${galleryId}/comments/${commentId}`
       );
       return data;
     } catch (error) {

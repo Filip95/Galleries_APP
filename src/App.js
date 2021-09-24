@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { getActiveUser, selectIsAuthenticated } from "./store/auth";
 
+import "./App.css";
 import NavBar from "./components/NavBar";
 import GuestRoute from "./components/shared/GuestRoute";
 import PrivateRoute from "./components/shared/PrivateRoute";
@@ -17,6 +18,7 @@ import AppGalleries from "./pages/AppGalleries";
 import AddGallery from "./pages/AddGallery";
 import UserGalleries from "./pages/UserGalleries";
 import SingleGallery from "./pages/SingleGallery";
+import AuthorGalleries from "./pages/AuthorGalleries";
 
 function App() {
   const dispatch = useDispatch();
@@ -47,9 +49,12 @@ function App() {
         <Route exact path="/galleries">
           <AppGalleries />
         </Route>
-        { <Route exact path="/galleries/:id">
+        <PrivateRoute exact path="/authors/:id">
+          <AuthorGalleries />
+        </PrivateRoute>
+        <PrivateRoute exact path="/galleries/:id">
           <SingleGallery />
-        </Route> }
+        </PrivateRoute>
         <Route exact path="/">
           <Redirect to="/galleries" />
         </Route>

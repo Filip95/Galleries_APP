@@ -8,29 +8,52 @@ function AppGalleries() {
 
   useEffect(() => {
     const getGalleries = async () => {
-      const {data} = await galleryService.getAll();
+      const { data } = await galleryService.getAll();
       setGalleries(data);
     };
     getGalleries();
   }, []);
 
   return (
-    <div>
-      <h2>All galleries</h2>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        justifyContent: "space-evenly",
+        alignItems: "flex-start",
+        backgroundColor: "bisque",
+        direction: "ltr",
+      }}
+    >
+      <h1>All galleries</h1>
       {galleries.map((gallery) => (
         <div key={gallery.id}>
-          <p>
+          <div style={{ padding: "10px" }}>
             <Link to={`galleries/${gallery.id}`}>
-              <strong>{gallery.name}</strong>
+              <h2>
+                <strong>{gallery.name}</strong>
+              </h2>
             </Link>
-          </p>
-          <p>
-            <strong>Description:</strong> {gallery.description}
+          </div>
+          <div style={{ padding: "10px" }}>
+            <Link to={`authors/${gallery.user_id}`}>
+              <h3>
+                <strong>{gallery.user.first_name}</strong>
+              </h3>
+            </Link>
+          </div>
+          <div>
+            <div style={{ padding: "10px" }}>
+              <strong>Description:</strong> {gallery.description}
+            </div>
             <img
               src={gallery.images.length ? gallery.images[0].image_url : ""}
               alt="Various images contained in a gallery"
+              style={{ padding: "10px" }}
+              width="50%"
             />
-          </p>
+          </div>
         </div>
       ))}
     </div>

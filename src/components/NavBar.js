@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link,Redirect } from "react-router-dom";
 import { logout, selectActiveUser, selectIsAuthenticated } from "../store/auth";
 
 function NavBar() {
@@ -9,6 +9,7 @@ function NavBar() {
 
   function handleLogout() {
     dispatch(logout());
+    return <Redirect to="/galleries" />;
   }
 
   return (
@@ -20,10 +21,10 @@ function NavBar() {
         {isAuthenticated ? (
           <>
             <li>
-              <Link to="create-gallery">Create a gallery</Link>
+              <Link to="/create-gallery">Create a gallery</Link>
             </li>
             <li>
-              <Link to="my-galleries">My Galleries</Link>
+              <Link to="/my-galleries">My Galleries</Link>
             </li>
             <button onClick={handleLogout}>Logout</button>
           </>

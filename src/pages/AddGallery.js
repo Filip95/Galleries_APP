@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import {  selectActiveUser } from "../store/auth";
+import { selectActiveUser } from "../store/auth";
 import galleryService from "../services/GalleryService";
 
 function AddGallery() {
@@ -9,18 +9,18 @@ function AddGallery() {
     name: "",
     description: "",
     image_url: "",
+    user_id: "",
   });
   const history = useHistory();
   const { id } = useParams();
   const activeUser = useSelector(selectActiveUser);
-
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     let data = null;
     console.log(activeUser);
     if (!activeUser) {
-        return ;
+      return;
     }
     console.log(activeUser);
 
@@ -34,35 +34,42 @@ function AddGallery() {
     }
 
     if (!data) {
-      alert("Could not create gallery");
+      alert("Could not create a new gallery");
       return;
     }
 
-    history.push("/galleries");
+    history.push("/my-galleries");
   };
+
 
   const handleReset = () => {
-    setNewGallery({ name: "", description: "", userId: "" });
+    setNewGallery({
+      name: "",
+      description: "",
+      image_url: "",
+    });
   };
 
-   useEffect(() => {
-     const fetchPost = async () => {
-       const {
-         id: _,
-         createdAt,
-         ...restData
-       } = await galleryService.getSelectedGallery(id);
-       setNewGallery(restData);
-     };
+  useEffect(() => {
+    const fetchPost = async () => {
+      const {
+        id: _,
+        createdAt,
+        ...restData
+      } = await galleryService.getSelectedGallery(id);
+      setNewGallery(restData);
+    };
 
-     if (id) {
-       fetchPost();
-     }
-   }, [id]);
+    if (id) {
+      fetchPost();
+    }
+  }, [id]);
+
+
 
   return (
     <div>
-      <h2>{id ? "Edit" : "Add new"} </h2>
+      <h2>{id ? "Edit gallery" : "Add new gallery"} </h2>
       <form
         style={{ display: "flex", flexDirection: "column", width: 300 }}
         onSubmit={handleSubmit}
@@ -86,13 +93,13 @@ function AddGallery() {
             setNewGallery({ ...newGallery, description: target.value })
           }
         />
-       <input
+        <input
           required
           maxLength={255}
           value={newGallery.image_url}
-          placeholder='images'
+          placeholder="images"
           onChange={({ target }) =>
-          setNewGallery({ ...newGallery, image_url: target.value,  })
+            setNewGallery({ ...newGallery, image_url: target.value })
           }
         />
         <button>{id ? "Edit" : "Add"}</button>
@@ -100,6 +107,7 @@ function AddGallery() {
           Reset
         </button>
       </form>
+    
     </div>
   );
 }
